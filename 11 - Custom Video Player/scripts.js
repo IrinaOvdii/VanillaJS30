@@ -41,13 +41,14 @@ function scrub(e) {
   video.currentTime = scrubTime;
 }
 
-function fullScreen() {
-  // var element = document.getElementById(id);
-  if (screenButton.mozRequestFullScreen) {
-    screenButton.mozRequestFullScreen();
-  } else if (screenButton.webkitRequestFullScreen) {
-    screenButton.webkitRequestFullScreen();
-  }
+function handleFullScreen() {
+    console.log(video.requestFullscreen, video.mozRequestFullScreen, video.webkitRequestFullscreen);
+    if (!document.webkitIsFullScreen) {
+        video.webkitRequestFullscreen();
+    } else {
+        video.webkitExitFullScreen();
+    }
+    console.dir(video);
 }
 
 /* Hook up the event listeners */
@@ -65,4 +66,4 @@ progress.addEventListener('click', scrub);
 progress.addEventListener('mousemove', (e) => mousedown && scrub(e));
 progress.addEventListener('mousedown', () => mousedown = true);
 progress.addEventListener('mouseup', () => mousedown = false);
-screenButton.addEventListener('click', fullScreen)
+screenButton.addEventListener('click', handleFullScreen)
